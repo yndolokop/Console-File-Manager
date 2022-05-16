@@ -8,8 +8,7 @@ def shopping_history():  # функция печатает историю пок
     print('История покупок: ', dict_history)
 
 
-def buy(new_balance):
-    price = int(input('Введите сумму покупки: '))
+def buy(new_balance, price):
     if price > new_balance:
         print('Недостаточно денег. Пополните счет')
     elif price <= new_balance:
@@ -22,3 +21,6 @@ def buy(new_balance):
     else:
         print('Обратитесь в техподдержку')
     return new_balance
+
+
+

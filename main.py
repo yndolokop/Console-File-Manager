@@ -59,7 +59,8 @@ def console_file_manager():
                     balance = int(input('Пополните счет. Введите сумму пополнения: '))
                     new_balance += balance
                 elif choice == '2':
-                    new_balance = buy(new_balance)
+                    price = int(input('Введите сумму покупки: '))
+                    new_balance = buy(new_balance, price)
                 elif choice == '3':
                     shopping_history()
                 elif choice == '4':
