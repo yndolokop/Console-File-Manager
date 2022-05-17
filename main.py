@@ -31,7 +31,9 @@ def console_file_manager():
         elif choice == '3':
             original = input('file name ')
             target = input('file name ')
-            shutil.copyfile(original, target)
+            original = os.path.join(os.getcwd(), f'{original}')
+            target = os.path.join(os.getcwd(), f'{target}')
+            shutil.copy(original, target)
         elif choice == '4':
             print(os.listdir())
         elif choice == '5':
