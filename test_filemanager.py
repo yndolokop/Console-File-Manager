@@ -19,8 +19,8 @@ def test_console_file_manager():
         os.remove("vv.py")
 
 
-def test_buy():                  # тест проходить если из терминала набрать pytest -s test_filemanager.py
-    assert buy(0, 10) == 0
+def test_buy():                  # не знаю, можно так делать или нет, но тест проходит если из терминала набрать
+    assert buy(0, 10) == 0       # 'pytest -s test_filemanager.py'
     pyautogui.keyDown("enter")
     assert buy(100, 10) > 0
     pyautogui.keyDown("enter")
