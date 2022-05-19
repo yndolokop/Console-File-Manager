@@ -1,2 +1,2 @@
-# Console-File-Manager
+# Console File Manager
 Консольный файловый менеджер
