@@ -52,7 +52,7 @@ def console_file_manager():
         elif choice == '9':
             if os.path.exists('shopping_history.data'):
                 with open('shopping_history.data', 'rb') as f:
-                    pickle.load()
+                    pickle.load(f)
 
             new_balance = 0
             while True:
@@ -73,8 +73,8 @@ def console_file_manager():
                     print('История покупок: ', shopping_history())
                 elif choice == '4':
                     with open('shopping_history.data', 'wb') as f:
-                        result = shopping_history()
-                        pickle.dump(result, f)
+                        # result = shopping_history()
+                        pickle.dump(shopping_history(), f)
                         break
                 else:
                     print('Неверный пункт меню')
