@@ -50,9 +50,9 @@ def console_file_manager():
         elif choice == '8':
             print(sys.exit('Python creator Guido van Rossum sys.exit()s as language overlord'))
         elif choice == '9':
-            # if os.path.exists('shopping_history.data'):
-            #     with open('shopping_history.data', 'rb', encoding='utf-8') as f:
-            #         pickle.load(f)
+            if os.path.exists('shopping_history.data'):
+                with open('shopping_history.data', 'rb') as f:
+                    pickle.load(f)
             new_balance = 0
             while True:
                 print('1. пополнение счета')
@@ -71,9 +71,8 @@ def console_file_manager():
                     shopping_history()
                     print('История покупок: ', shopping_history())
                 elif choice == '4':
-                    # with open('shopping_history.data', 'wb', encoding='utf-8') as f:
-                    #     # result = shopping_history()
-                    #     pickle.dump(shopping_history(), f)
+                    with open('shopping_history.data', 'wb') as f:
+                        pickle.dump(shopping_history(), f)
                     break
                 else:
                     print('Неверный пункт меню')
