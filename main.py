@@ -52,7 +52,8 @@ def console_file_manager():
         elif choice == '9':
             if os.path.exists('shopping_history.data'):
                 with open('shopping_history.data', 'rb') as f:
-                    pickle.load(f)
+
+                    shopping_history() = pickle.load(f)
             new_balance = 0
             while True:
                 print('1. пополнение счета')
