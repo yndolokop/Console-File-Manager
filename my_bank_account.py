@@ -1,11 +1,11 @@
-history_item = []  # хранит список товаров
-history_price = []  # хранит список цен
+history_item = []  # хранит историю товаров
+history_price = []  # хранит историю цен
 new_balance = 0
 
 
 def shopping_history():  # функция печатает историю покупок из двух списков: названий товара и цен
     dict_history = dict(zip(history_item, history_price))
-    print('История покупок: ', dict_history)
+    return dict_history
 
 
 def buy(new_balance, price):

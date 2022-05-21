@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+import pickle
 
 
 from my_bank_account import buy, shopping_history
@@ -49,6 +50,10 @@ def console_file_manager():
         elif choice == '8':
             print(sys.exit('Python creator Guido van Rossum sys.exit()s as language overlord'))
         elif choice == '9':
+            if os.path.exists('shopping_history.data'):
+                with open('shopping_history.data', 'rb') as f:
+                    pickle.load()
+
             new_balance = 0
             while True:
                 print('1. пополнение счета')
@@ -65,8 +70,12 @@ def console_file_manager():
                     new_balance = buy(new_balance, price)
                 elif choice == '3':
                     shopping_history()
+                    print('История покупок: ', shopping_history())
                 elif choice == '4':
-                    break
+                    with open('shopping_history.data', 'wb') as f:
+                        result = shopping_history()
+                        pickle.dump(result, f)
+                        break
                 else:
                     print('Неверный пункт меню')
         elif choice == '10':
