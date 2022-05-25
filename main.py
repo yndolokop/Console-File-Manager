@@ -55,6 +55,11 @@ def copy_file_or_directory():
     name = input('Введите имя файла: ')
     new_name = input('Введите имя копиии: ')
     filemanager.copy_file_folder(name, new_name)
+# original = input('file name ')
+# target = input('file name ')
+# original = os.path.join(os.getcwd(), f'{original}')
+# target = os.path.join(os.getcwd(), f'{target}')
+# shutil.copy(original, target)
 
 
 def print_files_in_project():
@@ -70,10 +75,11 @@ def print_directories_in_project():
 
 def write_files_and_dirs_to_json():
     dir_name = input('Введите имя директории: ')
-    files_dir_list = filemanager.files_and_dirs_to_file()
-    print(files_dir_list)
+    files_dirs = filemanager.files_and_dirs_to_file()
+    for k, v in files_dirs.items():
+        print(k, '-->', v)
     with open(dir_name, 'w') as f:
-        json.dump(files_dir_list, f)
+        json.dump(files_dirs, f)
 
 
 def print_author():

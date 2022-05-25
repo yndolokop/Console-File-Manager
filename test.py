@@ -30,3 +30,7 @@
 #
 # print(sys.platform)
 # print(sys.path)
+
+def shopping_history():  # функция печатает историю покупок из двух списков: названий товара и цен
+    dict_history = dict(zip(history_item, history_price))
+    print('История покупок: ', dict_history)
