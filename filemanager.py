@@ -42,16 +42,17 @@ def list_directories():
             result.append(i)
     return result
 
+
 def files_and_dirs_to_file():
-    list_files_and_dirs = []
-    # result_directories = []
+    lst_files = []
+    lst_directories = []
     for item in os.listdir(os.path.join(os.getcwd())):
         if os.path.isfile(item):
-            list_files_and_dirs.append(f'files: , {item}')
+            lst_files.append(item)
     for i in os.listdir(os.path.join(os.getcwd())):
         if os.path.isdir(i):
-            list_files_and_dirs.append(f'dirs: , {i}')
-    return list_files_and_dirs
+            lst_directories.append(i)
+    return list_files, list_directories
 
 def author_info():
     return 'Python creator Guido van Rossum as language overlord'

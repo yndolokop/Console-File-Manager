@@ -119,7 +119,6 @@ def is_correct_choice(choice):
     """
     return choice.isdigit() and 0 < int(choice) <= len(menu_items)
 
-
 # return choice.isdigit() and int(choice) > 0 and int(choice) <= len(menu_items)
 
 if __name__ == '__main__':
