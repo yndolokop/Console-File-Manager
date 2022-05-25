@@ -20,12 +20,6 @@ def copy_file_folder(name, new_name):
     else:
         shutil.copyfile(name, new_name)
 
-# original = input('file name ')
-# target = input('file name ')
-# original = os.path.join(os.getcwd(), f'{original}')
-# target = os.path.join(os.getcwd(), f'{target}')
-# shutil.copy(original, target)
-
 
 def list_files():
     result = []
