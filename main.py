@@ -11,7 +11,7 @@ DELETE_FILE_FOLDER = ' удалить (файл/папку)'
 COPY_FILE_FOLDER = ' копировать (файл/папку)'
 LIST_ONLY_FILES = ' посмотреть только файлы'
 LIST_ONLY_FOLDERS = ' посмотреть только папки'
-WRITE_CURRENT_DIR_TO_FILE = 'сохранить содержимое рабочей директории в файл'
+SAVE_DIR_CONTENT_TO_FILE = 'сохранить содержимое рабочей директории в файл'
 AUTHOR_INFO = ' создатель программы'
 CHANGE_CURRENT_DIR = ' смена рабочей директории'
 MY_BANK_ACCOUNT = ' мой банковский счет'
@@ -26,7 +26,7 @@ menu_items = (
     COPY_FILE_FOLDER,
     LIST_ONLY_FILES,
     LIST_ONLY_FOLDERS,
-    WRITE_CURRENT_DIR_TO_FILE,
+    SAVE_DIR_CONTENT_TO_FILE,
     AUTHOR_INFO,
     CHANGE_CURRENT_DIR,
     MY_BANK_ACCOUNT,
@@ -73,7 +73,8 @@ def print_directories_in_project():
     for item in directories:
         print(item)
 
-def write_files_and_dirs_to_json():
+
+def save_filenames_and_folders_to_json():
     dir_name = input('Введите имя директории: ')
     files_dirs = filemanager.files_and_dirs_to_file()
     for k, v in files_dirs.items():
@@ -100,7 +101,7 @@ actions = {
     COPY_FILE_FOLDER: copy_file_or_directory,
     LIST_ONLY_FILES: print_files_in_project,
     LIST_ONLY_FOLDERS: print_directories_in_project,
-    WRITE_CURRENT_DIR_TO_FILE: write_files_and_dirs_to_json,
+    SAVE_DIR_CONTENT_TO_FILE: save_filenames_and_folders_to_json,
     AUTHOR_INFO: print_author,
     CHANGE_CURRENT_DIR: print_change_dir,
     MY_BANK_ACCOUNT: run_my_bank_account,
@@ -125,7 +126,6 @@ def is_correct_choice(choice):
     """
     return choice.isdigit() and 0 < int(choice) <= len(menu_items)
 
-# return choice.isdigit() and int(choice) > 0 and int(choice) <= len(menu_items)
 
 if __name__ == '__main__':
     # цикл основной программы
