@@ -6,7 +6,7 @@ def get_random_person():
     Получить 1 го случайного человека
     :return:
     """
-    FAMOUS_PEOPLE = {'Александр Сергеевич Пушнин': '26.06.1799', 'Михаил Юрьевич Лермонтов': '15.10.1814',
+    famous_people = {'Александр Сергеевич Пушнин': '26.06.1799', 'Михаил Юрьевич Лермонтов': '15.10.1814',
                      'Сергей Александрович Есенин': '03.10.1895', 'Владимир Семенович Высоцкий': '25.01.1938',
                      'Виктор Робертович Цой': '21.06.1962', 'Константин Эдуардович Циолковский': '17.09.1857',
                      'Сергей Павлович Королев': '12.01.1907', 'Валентин Петрович Глушко': '20.08.1908',
@@ -14,11 +14,11 @@ def get_random_person():
 
     # print(FAMOUS_PEOPLE)
     # print(FAMOUS_PEOPLE.items())
-    name, date = random.choice(list(FAMOUS_PEOPLE.items()))
+    name, date = random.choice(list(famous_people.items()))
     return name, date
 
 
-def get_person_and_question():
+def play_victorina():
     # Выбираем случайного человека
     name, date = get_random_person()
 

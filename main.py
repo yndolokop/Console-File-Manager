@@ -1,94 +1,142 @@
 import os
-import shutil
-import sys
-import pickle
+import json
+
+from my_bank_account import run_my_bank_account
+import filemanager
+from victorina_famous_people import play_victorina
+
+# Названия пунктов меню
+CREATE_FILE_FOLDER = ' создать файл/папку'
+DELETE_FILE_FOLDER = ' удалить (файл/папку)'
+COPY_FILE_FOLDER = ' копировать (файл/папку)'
+LIST_ONLY_FILES = ' посмотреть только файлы'
+LIST_ONLY_FOLDERS = ' посмотреть только папки'
+WRITE_CURRENT_DIR_TO_FILE = 'сохранить содержимое рабочей директории в файл'
+AUTHOR_INFO = ' создатель программы'
+CHANGE_CURRENT_DIR = ' смена рабочей директории'
+MY_BANK_ACCOUNT = ' мой банковский счет'
+PLAY_VICTORINA = ' играть в викторину'
+EXIT = 'выход'
 
 
-from my_bank_account import buy, shopping_history
-from victorina_famous_people import get_person_and_question
+# Набор пунктов меню
+menu_items = (
+    CREATE_FILE_FOLDER,
+    DELETE_FILE_FOLDER,
+    COPY_FILE_FOLDER,
+    LIST_ONLY_FILES,
+    LIST_ONLY_FOLDERS,
+    WRITE_CURRENT_DIR_TO_FILE,
+    AUTHOR_INFO,
+    CHANGE_CURRENT_DIR,
+    MY_BANK_ACCOUNT,
+    PLAY_VICTORINA,
+    EXIT
+)
 
 
-def console_file_manager():
+def separator(count=30):
+    return '*' * count
+
+
+def create_file_or_directory():
+    file_name = input('Введите имя файла: ')
+    folder_name = input('Введите имя папки: ')
+    filemanager.create_file_folder(file_name, folder_name)
+
+
+def delete_file_or_directory():
+    file_name = input('Введите имя файла: ')
+    folder_name = input('Введите имя папки: ')
+    filemanager.delete_file_folder(file_name, folder_name)
+
+
+def copy_file_or_directory():
+    name = input('Введите имя файла: ')
+    new_name = input('Введите имя копиии: ')
+    filemanager.copy_file_folder(name, new_name)
+
+
+def print_files_in_project():
+    files = filemanager.list_files()
+    for item in files:
+        print(item)
+
+
+def print_directories_in_project():
+    directories = filemanager.list_directories()
+    for item in directories:
+        print(item)
+
+def write_files_and_dirs_to_json():
+    dir_name = input('Введите имя директории: ')
+    files_dir_list = filemanager.files_and_dirs_to_file()
+    print(files_dir_list)
+    with open(dir_name, 'w') as f:
+        json.dump(files_dir_list, f)
+
+
+def print_author():
+    author = filemanager.author_info()
+    print(author)
+
+
+def print_change_dir():
+    name_dir = input('Введите имя директории: ')
+    filemanager.change_dir(name_dir)
+    print(os.getcwd())
+
+
+# Словарь действия связывает название пункта меню с той функцией которую нужно выполнить
+actions = {
+    CREATE_FILE_FOLDER: create_file_or_directory,
+    DELETE_FILE_FOLDER: delete_file_or_directory,
+    COPY_FILE_FOLDER: copy_file_or_directory,
+    LIST_ONLY_FILES: print_files_in_project,
+    LIST_ONLY_FOLDERS: print_directories_in_project,
+    WRITE_CURRENT_DIR_TO_FILE: write_files_and_dirs_to_json,
+    AUTHOR_INFO: print_author,
+    CHANGE_CURRENT_DIR: print_change_dir,
+    MY_BANK_ACCOUNT: run_my_bank_account,
+    PLAY_VICTORINA: play_victorina,
+    EXIT: filemanager.quit_program
+}
+
+
+def print_main_menu():
+    print(separator())
+    # Выводим названи пункта меню и цифру начиная с 1
+    for number, item in enumerate(menu_items, 1):
+        print(f'{number}. {item}')
+    print(separator())
+
+
+def is_correct_choice(choice):
+    """
+    Функция проверяет что выбран корректный пункт меню
+    :param choice: выбор
+    :return: True/False
+    """
+    return choice.isdigit() and 0 < int(choice) <= len(menu_items)
+
+
+# return choice.isdigit() and int(choice) > 0 and int(choice) <= len(menu_items)
+
+if __name__ == '__main__':
+    # цикл основной программы
     while True:
-        print('1. создать папку')
-        print('2. удалить (файл/папку)')
-        print('3. копировать (файл/папку)')
-        print('4. просмотр содержимого рабочей директории')
-        print('5. посмотреть только папки')
-        print('6. посмотреть только файлы')
-        print('7. просмотр информации об операционной системе')
-        print('8. создатель программы')
-        print('9. мой банковский счет')
-        print('10. играть в викторину')
-        print('11. смена рабочей директории')
-        print('12. выход')
-        choice = input('Выберите пункт меню: ')
-        if choice == '1':
-            folder = input('Введите имя папки: ')
-            os.mkdir(f'{folder}')
-        elif choice == '2':
-            folder = input('Введите имя папки: ')
-            os.rmdir(f'{folder}')
-        elif choice == '3':
-            original = input('file name ')
-            target = input('file name ')
-            original = os.path.join(os.getcwd(), f'{original}')
-            target = os.path.join(os.getcwd(), f'{target}')
-            shutil.copy(original, target)
-        elif choice == '4':
-            print(os.listdir())
-        elif choice == '5':
-            for i in os.listdir(os.path.join(os.getcwd())):
-                if os.path.isdir(i):
-                    print(i)
-        elif choice == '6':
-            for i in os.listdir(os.path.join(os.getcwd())):
-                if os.path.isfile(i):
-                    print(i)
-        elif choice == '7':
-            print(sys.platform)
-        elif choice == '8':
-            print(sys.exit('Python creator Guido van Rossum sys.exit()s as language overlord'))
-        elif choice == '9':
-            if os.path.exists('shopping_history.data'):
-                with open('shopping_history.data', 'rb') as f:
-
-                    shopping_history() = pickle.load(f)
-            new_balance = 0
-            while True:
-                print('1. пополнение счета')
-                print('2. покупка')
-                print('3. история покупок')
-                print('4. выход')
-                print(f'Ваш счет: {new_balance}')
-                choice = input('Выберите пункт меню: ')
-                if choice == '1':
-                    balance = int(input('Пополните счет. Введите сумму пополнения: '))
-                    new_balance += balance
-                elif choice == '2':
-                    price = int(input('Введите сумму покупки: '))
-                    new_balance = buy(new_balance, price)
-                elif choice == '3':
-                    shopping_history()
-                    print('История покупок: ', shopping_history())
-                elif choice == '4':
-                    with open('shopping_history.data', 'wb') as f:
-                        pickle.dump(shopping_history(), f)
-                    break
-                else:
-                    print('Неверный пункт меню')
-        elif choice == '10':
-            rounds = int(input('Сколько раз вы хотите играть? '))
-            for i in range(rounds):
-                get_person_and_question()
-            print('Пока!')
-        elif choice == '11':
-            os.chdir(os.path.join(os.getcwd(), input('Введите имя директории: ')))
-            print(os.getcwd())
-        elif choice == '12':
-            break
+        # рисуем меню
+        print_main_menu()
+        # пользователь выбирает цифру
+        choice = input('Выберите пункт меню ')
+        # проверяем что это корректный выбор
+        if is_correct_choice(choice):
+            # получаем назвнание пункта меню по номеру
+            # choice - 1, т.к. в меню пункты выводятся с 1 а в картеже хранятся с 0
+            choice_name = menu_items[int(choice) - 1]
+            # получаем действие в зависимости от пунктам меню
+            action = actions[choice_name]
+            # вызываем функцию
+            action()
         else:
             print('Неверный пункт меню')
-
-
-console_file_manager()
