@@ -1,18 +1,10 @@
-import os
+
 from filemanager import list_files, list_directories, files_and_dirs_to_file
 
 
 def test_separator():
     count = 5
     assert '*' * count == '*****'
-
-
-# def test_create_file_folder():
-#     os.mkdir('test_.py')
-#     assert 'test_.py' in os.listdir()
-
-
-# def test_files_and_dirs_to_file():
 
 
 def test_list_files():
@@ -25,7 +17,10 @@ def test_list_directories():
 
 
 def test_files_and_dirs_to_file():
-    assert if any([True for k,v in word_freq.items() if v == value])
+    r = files_and_dirs_to_file()
+    if isinstance(r, list):
+        assert 'main.py' in r
+
 
 
 
