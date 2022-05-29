@@ -1,17 +1,42 @@
 import shutil
 import os
 import sys
+'''
+Добавлен декорвтор add_separator()
+Добавлен try/except в функцию create_file_folder(). 
+Добавлен try/except в функцию delete_file_folder(). 
+'''
+
+def add_separators(f):
+    def inner(*args, **kwargs):
+        print('*' * 30)
+        result = f(*args, **kwargs)
+        print('*' * 30)
+        return result
+    return inner
 
 
-def create_file_folder(file_name, folder_name):
-    if not os.path.exists(file_name):
+def create_file_folder(folder_name, file_name):
+    try:
+        if not os.path.exists(file_name):
+            open(file_name, "w")
+    except FileNotFoundError:
+        print()
+    finally:
+        os.mkdir(folder_name)
         open(file_name, "w")
-    os.mkdir(folder_name)
 
 
 def delete_file_folder(file_name, folder_name):
-    os.remove(file_name)
-    os.rmdir(folder_name)
+    try:
+        os.rmdir(folder_name)
+    except FileNotFoundError:
+        print()
+    else:
+        os.remove(file_name)
+        os.rmdir(folder_name)
+    finally:
+        os.remove(file_name)
 
 
 def copy_file_folder(name, new_name):

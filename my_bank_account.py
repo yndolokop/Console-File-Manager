@@ -1,7 +1,9 @@
 import pickle
 import os
+from filemanager import add_separators
 
 
+@add_separators
 def run_my_bank_account():
     new_balance = 0
     history_orders_list = []

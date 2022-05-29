@@ -1,9 +1,15 @@
+"""
+a) Добовлен тернальный оператор в блоке if __name__ == '__main__' для функции print_main_menu() line 149
+б) Добовлен также декоратор для функции print_main_menu() line 115
+"""
+
 import os
 import json
 
 from my_bank_account import run_my_bank_account
 import filemanager
 from victorina_famous_people import play_victorina
+
 
 # Названия пунктов меню
 CREATE_FILE_FOLDER = ' создать файл/папку'
@@ -17,7 +23,6 @@ CHANGE_CURRENT_DIR = ' смена рабочей директории'
 MY_BANK_ACCOUNT = ' мой банковский счет'
 PLAY_VICTORINA = ' играть в викторину'
 EXIT = 'выход'
-
 
 # Набор пунктов меню
 menu_items = (
@@ -33,35 +38,41 @@ menu_items = (
     PLAY_VICTORINA,
     EXIT
 )
-
-
-def separator(count=30):
-    return '*' * count
-
+'''
+Добавлен try/except в функцию create_file_or_directory(). Функция создает файл и папку без ошибок, если ввести имена 
+и файла и папки. И файл или папку по отдельности, если вводить имя или файла или только папки. До записи в ввиде 
+try/except была красная ошибка. 
+'''
 
 def create_file_or_directory():
     file_name = input('Введите имя файла: ')
     folder_name = input('Введите имя папки: ')
-    filemanager.create_file_folder(file_name, folder_name)
+    try:
+        filemanager.create_file_folder(folder_name, file_name)
+    except Exception as e:
+        print(e)
 
 
 def delete_file_or_directory():
     file_name = input('Введите имя файла: ')
     folder_name = input('Введите имя папки: ')
-    filemanager.delete_file_folder(file_name, folder_name)
+    try:
+        filemanager.delete_file_folder(file_name, folder_name)
+    except Exception as e:
+        print(e)
 
 
 def copy_file_or_directory():
-    name = input('Введите имя файла: ')
+    name = input('Создать копию файла/папки. Введите имя: ')
     new_name = input('Введите имя копиии: ')
     filemanager.copy_file_folder(name, new_name)
+
+
 # original = input('file name ')
 # target = input('file name ')
 # original = os.path.join(os.getcwd(), f'{original}')
 # target = os.path.join(os.getcwd(), f'{target}')
 # shutil.copy(original, target)
-
-
 def print_files_in_project():
     files = filemanager.list_files()
     for item in files:
@@ -110,12 +121,13 @@ actions = {
 }
 
 
+@filemanager.add_separators
 def print_main_menu():
-    print(separator())
+    # print(separator())
     # Выводим названи пункта меню и цифру начиная с 1
     for number, item in enumerate(menu_items, 1):
         print(f'{number}. {item}')
-    print(separator())
+    # print(separator())
 
 
 def is_correct_choice(choice):
@@ -128,20 +140,23 @@ def is_correct_choice(choice):
 
 
 if __name__ == '__main__':
-    # цикл основной программы
     while True:
-        # рисуем меню
         print_main_menu()
-        # пользователь выбирает цифру
-        choice = input('Выберите пункт меню ')
-        # проверяем что это корректный выбор
+        choice = input('Выберите пункт меню: ')
+        '********************************************'
+        # action = actions[menu_items[int(choice) - 1]] if is_correct_choice(choice) else 'Неверный пункт меню'
+        # action()
+        '''
+        Попытка записи тернальным оператором нижележащего кода. Так и не разобрался почему при вводе или 0 или 12, 
+        например, или букв вместо цифр, не переходит к условию ELSE, но выдает ошибку 'str object is not callable'.
+        Хотя, при вводе пунктов, которые соответствуют меню, работает корректно.
+        '''
+        '*********************************************'
         if is_correct_choice(choice):
-            # получаем назвнание пункта меню по номеру
-            # choice - 1, т.к. в меню пункты выводятся с 1 а в картеже хранятся с 0
             choice_name = menu_items[int(choice) - 1]
-            # получаем действие в зависимости от пунктам меню
             action = actions[choice_name]
-            # вызываем функцию
             action()
         else:
-            print('Неверный пункт меню')
+            print('Неверный пункт меню. Введите номер пункта меню')
+
+
