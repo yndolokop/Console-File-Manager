@@ -68,6 +68,7 @@ def files_and_dirs_to_file():
     for item in os.listdir(os.path.join(os.getcwd())):
         if os.path.isfile(item):
             lst_of_files.append(item)
+    # lst_of_files = [lst_of_files.append(item) for item in os.listdir(os.path.join(os.getcwd())) if os.path.isfile(item)]
     for i in os.listdir(os.path.join(os.getcwd())):
         if os.path.isdir(i):
             lst_of_directories.append(i)
